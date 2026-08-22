@@ -3,16 +3,12 @@
 > A program that prints `Hello, World!` to standard output and exits.
 
 [![CI](https://github.com/Daemon125/hello/actions/workflows/ci.yml/badge.svg)](https://github.com/Daemon125/hello/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/Daemon125/hello/actions/workflows/codeql.yml/badge.svg)](https://github.com/Daemon125/hello/actions/workflows/codeql.yml)
-[![Nightly](https://github.com/Daemon125/hello/actions/workflows/nightly.yml/badge.svg)](https://github.com/Daemon125/hello/actions/workflows/nightly.yml)
 
 **Status:** Stable. Feature-complete since 1972.
 **Language:** C (C99 or later; also builds as C89 with one caveat, see [Building](#5-building))
 **Lines of code:** 6
 **Lines of documentation:** 2,712 (in-source) + this file + [INSTRUCTIONS.md](INSTRUCTIONS.md)
 **Documentation-to-code ratio:** 452:1
-**Test coverage:** 100%
-**Open issues:** 0
 **Dependencies:** 1 (`libc`, which you already have)
 
 ---
