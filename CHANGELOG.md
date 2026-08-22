@@ -116,6 +116,10 @@ Nothing.
 
 ---
 
-[Unreleased]: https://github.com/OWNER/REPO/compare/v1.2.0...HEAD
-[1.2.0]: https://github.com/OWNER/REPO/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/OWNER/REPO/releases/tag/v1.1.0
+[Unreleased]: https://github.com/Daemon125/hello/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/Daemon125/hello/releases/tag/v1.2.0
+
+Entries before 1.2.0 predate this repository and have no corresponding tag.
+1.0.0 through 1.0.2 record changes the C standard forced on the program
+between 1972 and 1999; 1.1.0 records the commentary, which was written
+alongside 1.2.0 and released with it.

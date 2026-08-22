@@ -21,6 +21,10 @@ abstract: >-
   the philosophical status of the utterance. 2,712 lines of documentation
   supporting 6 lines of executable code.
 type: software
+version: 1.2.0
+date-released: 2026-08-22
+repository-code: https://github.com/Daemon125/hello
+url: https://github.com/Daemon125/hello
 license: Unlicense
 keywords:
   - c

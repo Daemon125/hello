@@ -2,9 +2,9 @@
 
 > A program that prints `Hello, World!` to standard output and exits.
 
-[![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/REPO/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/OWNER/REPO/actions/workflows/codeql.yml/badge.svg)](https://github.com/OWNER/REPO/actions/workflows/codeql.yml)
-[![Nightly](https://github.com/OWNER/REPO/actions/workflows/nightly.yml/badge.svg)](https://github.com/OWNER/REPO/actions/workflows/nightly.yml)
+[![CI](https://github.com/Daemon125/hello/actions/workflows/ci.yml/badge.svg)](https://github.com/Daemon125/hello/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/Daemon125/hello/actions/workflows/codeql.yml/badge.svg)](https://github.com/Daemon125/hello/actions/workflows/codeql.yml)
+[![Nightly](https://github.com/Daemon125/hello/actions/workflows/nightly.yml/badge.svg)](https://github.com/Daemon125/hello/actions/workflows/nightly.yml)
 
 **Status:** Stable. Feature-complete since 1972.
 **Language:** C (C99 or later; also builds as C89 with one caveat, see [Building](#5-building))

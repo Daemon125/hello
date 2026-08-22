@@ -41,7 +41,7 @@ fi
 # totals more than this many assertions; a floor rather than an exact
 # figure because the number of suites skipped varies by platform (valgrind
 # on Linux, static linking off macOS, and so on).
-ASSERTION_FLOOR=255
+ASSERTION_FLOOR=285
 
 FAILED=""
 TOTAL=0

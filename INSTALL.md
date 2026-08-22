@@ -284,7 +284,7 @@ Version:        1.2.0
 Release:        1%{?dist}
 Summary:        Print a greeting to standard output
 License:        Unlicense
-URL:            https://github.com/OWNER/REPO
+URL:            https://github.com/Daemon125/hello
 Source0:        %{name}-%{version}.tar.gz
 BuildRequires:  gcc, make
 
@@ -345,8 +345,8 @@ package() { cd "$pkgname-$pkgver"; make install DESTDIR="$pkgdir" PREFIX=/usr; }
 ```ruby
 class Hello < Formula
   desc "Print a greeting to standard output"
-  homepage "https://github.com/OWNER/REPO"
-  url "https://github.com/OWNER/REPO/archive/refs/tags/v1.2.0.tar.gz"
+  homepage "https://github.com/Daemon125/hello"
+  url "https://github.com/Daemon125/hello/archive/refs/tags/v1.2.0.tar.gz"
   license :public_domain
 
   def install

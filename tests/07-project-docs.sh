@@ -51,6 +51,44 @@ exists .github/description.txt "the GitHub description, version-controlled"
 exists hello.1               "manual page"
 exists Makefile              "verification targets"
 
+section "No unresolved placeholders"
+
+# Templates ship with OWNER/REPO and @OWNER standing in for the real
+# repository. Left in place they produce broken badges, 404 links, and a
+# CODEOWNERS file that assigns review to nobody -- none of which fails a
+# build, and all of which is visible on the repository's front page.
+_ph=$( cd "$ROOT" && grep -rl 'OWNER/REPO\|@OWNER\b' \
+        --include='*.md' --include='*.yml' --include='*.cff' \
+        --include='CODEOWNERS' . 2>/dev/null | tr '\n' ' ' )
+equals "no file contains an unresolved OWNER/REPO placeholder" "" "$_ph"
+
+_ex=$( cd "$ROOT" && grep -rln 'example\.invalid' --include='*.yml' \
+        --include='*.cff' . 2>/dev/null | tr '\n' ' ' )
+equals "no shipped metadata uses a placeholder address" "" "$_ex"
+
+section "Version consistency"
+
+# Every file that states a version must agree. Disagreement is invisible
+# until someone reads the manual page of a release and finds it claims to
+# be the previous one. CITATION.cff is the source of truth because it is
+# the only machine-readable declaration.
+_ver=$(sed -n 's/^version: *//p' "$ROOT/CITATION.cff" | head -1)
+printf '    declared version: %s (from CITATION.cff)\n' "$_ver"
+
+ok "CITATION.cff declares a version" test -n "$_ver"
+
+ok "the manual page states the same version" \
+    grep -q "\"hello $_ver\"" "$ROOT/hello.1"
+
+ok "CHANGELOG.md has an entry for this version" \
+    grep -q "^## \[$_ver\]" "$ROOT/CHANGELOG.md"
+
+ok "README.md's changelog summary lists this version" \
+    grep -q "^### \[$_ver\]" "$ROOT/README.md"
+
+ok "the packaging examples in INSTALL.md use this version" \
+    grep -q "Version: *$_ver" "$ROOT/INSTALL.md"
+
 section "Metadata is machine-readable"
 
 if command -v python3 >/dev/null 2>&1; then

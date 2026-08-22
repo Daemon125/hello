@@ -1,8 +1,8 @@
 blank_issues_enabled: true
 contact_links:
   - name: How do I run this?
-    url: https://github.com/OWNER/REPO/blob/master/INSTRUCTIONS.md
+    url: https://github.com/Daemon125/hello/blob/master/INSTRUCTIONS.md
     about: INSTRUCTIONS.md covers everything from buying a computer to Part 15's troubleshooting table.
   - name: Why is the source file 2,718 lines?
-    url: https://github.com/OWNER/REPO/blob/master/README.md#12-what-the-source-file-contains
+    url: https://github.com/Daemon125/hello/blob/master/README.md#12-what-the-source-file-contains
     about: README section 1.2.
