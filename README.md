@@ -2,7 +2,75 @@
 
 > A program that prints `Hello, World!` to standard output and exits.
 
+<sub>**Build**</sub><br>
 [![CI](https://github.com/Daemon125/hello/actions/workflows/ci.yml/badge.svg)](https://github.com/Daemon125/hello/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/Daemon125/hello/actions/workflows/codeql.yml/badge.svg)](https://github.com/Daemon125/hello/actions/workflows/codeql.yml)
+[![Nightly](https://github.com/Daemon125/hello/actions/workflows/nightly.yml/badge.svg)](https://github.com/Daemon125/hello/actions/workflows/nightly.yml)
+![master](https://img.shields.io/github/actions/workflow/status/Daemon125/hello/ci.yml?branch=master&label=master)
+
+<sub>**Quality**</sub><br>
+![tests](https://img.shields.io/badge/tests-285%2B%20passing-brightgreen)
+![coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
+![assertions](https://img.shields.io/badge/assertions-293-brightgreen)
+![suites](https://img.shields.io/badge/suites-7-brightgreen)
+![CI jobs](https://img.shields.io/badge/CI%20jobs-~100-blue)
+![warnings](https://img.shields.io/badge/warnings-0-brightgreen)
+![undefined behaviour](https://img.shields.io/badge/undefined%20behaviour-none-brightgreen)
+![attack surface](https://img.shields.io/badge/attack%20surface-zero-brightgreen)
+![known bugs](https://img.shields.io/badge/known%20bugs-1%20(documented)-yellow)
+
+<sub>**Language and standards**</sub><br>
+![language](https://img.shields.io/badge/language-C-555?logo=c&logoColor=white)
+![standard](https://img.shields.io/badge/standard-C89%20to%20C23-blue)
+![also compiles as](https://img.shields.io/badge/also%20compiles%20as-C%2B%2B98%20to%20C%2B%2B20-blue)
+![compilers](https://img.shields.io/badge/compilers-gcc%20%7C%20clang%20%7C%20MSVC%20%7C%20tcc-blue)
+![dependencies](https://img.shields.io/badge/dependencies-1%20(libc)-brightgreen)
+
+<sub>**Portability**</sub><br>
+![platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey)
+![arch](https://img.shields.io/badge/arch-x86--64%20%7C%20ARM64%20%7C%20RISC--V-lightgrey)
+![also](https://img.shields.io/badge/also-ppc64le%20%7C%20s390x%20(big--endian)-lightgrey)
+![freestanding](https://img.shields.io/badge/freestanding-unsupported-lightgrey)
+
+<sub>**Size**</sub><br>
+![lines of code](https://img.shields.io/badge/lines%20of%20code-6-brightgreen)
+![lines of documentation](https://img.shields.io/badge/lines%20of%20documentation-2712-blue)
+![docs to code](https://img.shields.io/badge/docs%20to%20code-452%3A1-blueviolet)
+![output](https://img.shields.io/badge/output-14%20bytes-blue)
+![exit status](https://img.shields.io/badge/exit%20status-0-brightgreen)
+![code size](https://img.shields.io/github/languages/code-size/Daemon125/hello)
+![repo size](https://img.shields.io/github/repo-size/Daemon125/hello)
+
+<sub>**Repository**</sub><br>
+[![license](https://img.shields.io/github/license/Daemon125/hello)](https://github.com/Daemon125/hello/blob/master/LICENSE)
+[![tag](https://img.shields.io/github/v/tag/Daemon125/hello?sort=semver)](https://github.com/Daemon125/hello/tags)
+[![release](https://img.shields.io/github/v/release/Daemon125/hello?sort=semver)](https://github.com/Daemon125/hello/releases)
+[![release date](https://img.shields.io/github/release-date/Daemon125/hello)](https://github.com/Daemon125/hello/releases)
+![commits since](https://img.shields.io/github/commits-since/Daemon125/hello/v1.2.0)
+[![last commit](https://img.shields.io/github/last-commit/Daemon125/hello)](https://github.com/Daemon125/hello/commits/master)
+![commit activity](https://img.shields.io/github/commit-activity/m/Daemon125/hello)
+[![issues](https://img.shields.io/github/issues/Daemon125/hello)](https://github.com/Daemon125/hello/issues)
+[![pull requests](https://img.shields.io/github/issues-pr/Daemon125/hello)](https://github.com/Daemon125/hello/pulls)
+[![contributors](https://img.shields.io/github/contributors-anon/Daemon125/hello)](https://github.com/Daemon125/hello/graphs/contributors)
+[![stars](https://img.shields.io/github/stars/Daemon125/hello?style=social)](https://github.com/Daemon125/hello/stargazers)
+[![forks](https://img.shields.io/github/forks/Daemon125/hello?style=social)](https://github.com/Daemon125/hello/network/members)
+
+<sub>**Conventions**</sub><br>
+[![code style](https://img.shields.io/badge/code%20style-editorconfig-black?logo=editorconfig&logoColor=white)](https://editorconfig.org)
+[![changelog](https://img.shields.io/badge/changelog-Keep%20a%20Changelog-orange)](https://github.com/Daemon125/hello/blob/master/CHANGELOG.md)
+[![versioning](https://img.shields.io/badge/versioning-SemVer%202.0.0-blue)](https://semver.org)
+![commits](https://img.shields.io/badge/commits-conventional-blue)
+[![code of conduct](https://img.shields.io/badge/code%20of%20conduct-adopted-ff69b4)](https://github.com/Daemon125/hello/blob/master/CODE_OF_CONDUCT.md)
+[![security policy](https://img.shields.io/badge/security%20policy-published-brightgreen)](https://github.com/Daemon125/hello/blob/master/SECURITY.md)
+[![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen)](https://github.com/Daemon125/hello/blob/master/CONTRIBUTING.md)
+![maintained](https://img.shields.io/badge/maintained-yes-brightgreen)
+
+<sub>**Provenance**</sub><br>
+![first released](https://img.shields.io/badge/first%20released-1972-lightgrey)
+![feature complete since](https://img.shields.io/badge/feature%20complete%20since-1972-lightgrey)
+![breaking changes](https://img.shields.io/badge/breaking%20changes-0-brightgreen)
+![built with](https://img.shields.io/badge/built%20with-printf(3)-555)
+![made with](https://img.shields.io/badge/made%20with-six%20lines-red)
 
 **Status:** Stable. Feature-complete since 1972.
 **Language:** C (C99 or later; also builds as C89 with one caveat, see [Building](#5-building))

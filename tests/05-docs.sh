@@ -110,6 +110,53 @@ else
 fi
 rm -f "$_suite"
 
+section "README badges"
+
+# Several badges state figures. A badge is a claim rendered as an image,
+# which makes it the least likely thing in the repository for anyone to
+# notice going stale -- nobody proofreads a picture. Every numeric badge is
+# therefore checked against the same ground truth as the prose.
+
+BADGES=$(grep -c 'img\.shields\.io\|badge\.svg' "$README" | tr -d ' ')
+printf '    %s badges in README.md\n' "$BADGES"
+
+ok "the README carries badges" test "$BADGES" -gt 0
+
+_ratio_enc=$(printf '%s' "$RATIO" | sed 's/$/%3A1/')
+
+ok "the lines-of-code badge matches hello.c ($SIG_LINES)" \
+    grep -q "lines%20of%20code-$SIG_LINES-" "$README"
+
+ok "the lines-of-documentation badge matches hello.c ($DOC_LINES)" \
+    grep -q "lines%20of%20documentation-$DOC_LINES-" "$README"
+
+ok "the docs-to-code badge matches the computed ratio ($RATIO:1)" \
+    grep -q "docs%20to%20code-$_ratio_enc-" "$README"
+
+ok "the output-size badge matches the program's actual output (14 bytes)" \
+    grep -q "output-$("$BIN" | wc -c | tr -d ' ')%20bytes-" "$README"
+
+ok "the exit-status badge matches the program's actual exit status" \
+    grep -q "exit%20status-0-" "$README"
+
+_suites=$(ls "$ROOT"/tests/0*.sh 2>/dev/null | wc -l | tr -d ' ')
+ok "the suite-count badge matches the number of suites ($_suites)" \
+    grep -q "suites-$_suites-" "$README"
+
+# The tests badge quotes the runner's assertion floor rather than a live
+# count, because the live count varies with which optional tools a host
+# has. The floor is a constant, so the badge can be exact about it.
+_floor=$(sed -n 's/^ASSERTION_FLOOR=//p' "$ROOT/tests/run.sh" | head -1)
+ok "the tests badge quotes the runner's assertion floor ($_floor+)" \
+    grep -q "tests-$_floor%2B%20passing-" "$README"
+
+# Badge URLs are opaque to the link checker, which only follows Markdown
+# link targets. A malformed shields path renders as "badge not found" and
+# is invisible in a diff, so the shapes are checked here.
+_malformed=$(grep -oE 'https://img\.shields\.io/github/(commits-since|actions/workflow/status)/[^)]*' "$README" \
+             | grep -c '?v[0-9]' | tr -d ' ')
+equals "no badge passes a path segment as a query string" "0" "$_malformed"
+
 section "Repository description"
 
 # GitHub's description field is edited in a web form and stored outside the
