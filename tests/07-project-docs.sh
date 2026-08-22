@@ -47,6 +47,7 @@ exists .editorconfig         "editor configuration"
 exists .gitignore            "build-product exclusions"
 exists .github/CODEOWNERS    "review routing"
 exists .github/dependabot.yml "the pipeline's own dependencies"
+exists .github/description.txt "the GitHub description, version-controlled"
 exists hello.1               "manual page"
 exists Makefile              "verification targets"
 

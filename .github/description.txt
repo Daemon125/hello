@@ -1,0 +1,1 @@
+Prints Hello, World! to standard output and exits. Six lines of C, 2,712 lines of commentary tracing the sentence from Proto-Indo-European through ALGOL 60 to the question of what it means to greet nobody, and 278 assertions across ~100 CI jobs on five architectures confirming that all of it, including the line counts in this description, is exact.

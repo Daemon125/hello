@@ -280,6 +280,7 @@ than once, and never freed, because it was never allocated.
 │   └── 07-project-docs.sh      community standards; install round-trip
 └── .github/
     ├── CODEOWNERS              review routing
+    ├── description.txt         the GitHub description; see section 11.8
     ├── dependabot.yml          the pipeline's own dependencies
     ├── PULL_REQUEST_TEMPLATE.md
     ├── ISSUE_TEMPLATE/         bug, documentation, and feature forms
@@ -849,6 +850,11 @@ It verifies:
   reference to it and nothing else, so nothing else would catch it.
 - That `make help` prints only the Makefile's comment header, and that the
   set of targets it documents is exactly the set the Makefile declares
+- That [`.github/description.txt`](.github/description.txt) — the repository
+  description, kept in version control so that it can be reviewed in a diff
+  rather than edited in a web form — is exactly 350 characters, is a single
+  line, and quotes line counts that match `hello.c`. The description asserts
+  of itself that its figures are exact; this is what makes that falsifiable.
 
 If a figure in this README is wrong, CI is red. The correct response is to
 change the prose, not the test.

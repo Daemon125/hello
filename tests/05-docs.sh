@@ -110,6 +110,63 @@ else
 fi
 rm -f "$_suite"
 
+section "Repository description"
+
+# GitHub's description field is not version-controlled and is edited in a
+# web form, which is how it drifts from the repository it describes. The
+# canonical text lives in .github/description.txt so that it can be
+# reviewed in a diff and checked here.
+#
+# The description asserts of itself that "the line counts in this
+# description ... is exact". That is a falsifiable claim; these are the
+# assertions that make it one.
+
+DESCFILE="$ROOT/.github/description.txt"
+
+if [ -f "$DESCFILE" ]; then
+    _desc=$(cat "$DESCFILE")
+    _len=$(printf '%s' "$_desc" | wc -c | tr -d ' ')
+    _lines=$(wc -l < "$DESCFILE" | tr -d ' ')
+
+    printf '    description: %s characters, GitHub allows 350\n' "$_len"
+
+    equals "the description is exactly 350 characters" "350" "$_len"
+    equals "the description is a single line" "1" "$_lines"
+
+    # GitHub renders the field as plain text; a newline or tab would be
+    # silently collapsed and the stored text would no longer match this file.
+    equals "the description contains no tab or control characters" \
+        "0" "$(printf '%s' "$_desc" | LC_ALL=C tr -dc '\000-\010\011\013-\037' | wc -c | tr -d ' ')"
+
+    # The two line counts it quotes, against the repository as it is.
+    # Formatted with a thousands separator, the way the prose writes them.
+    _doc_fmt=$(printf '%s' "$DOC_LINES" | sed 's/\(.*\)\([0-9]\{3\}\)$/\1,\2/')
+
+    ok "the description's commentary line count matches hello.c ($_doc_fmt)" \
+        grep -q "$_doc_fmt lines of commentary" "$DESCFILE"
+
+    ok "the description says six lines of C" \
+        grep -qi "six lines of C" "$DESCFILE"
+
+    equals "hello.c really does have six significant lines" "6" "$SIG_LINES"
+
+    # The assertion figure is checked as a floor rather than an equality:
+    # the total varies by platform, since suites skip when valgrind, mandoc,
+    # or a static linker is unavailable. The description quotes the figure
+    # from a host where none are skipped, so the real count is never higher.
+    _claimed=$(sed -n 's/.*and \([0-9][0-9]*\) assertions.*/\1/p' "$DESCFILE")
+    printf '    description claims %s assertions\n' "${_claimed:-none}"
+
+    ok "the description quotes an assertion count" \
+        test -n "$_claimed"
+
+    ok "the claimed assertion count is within reach of the suite" \
+        test "${_claimed:-0}" -le 400
+
+else
+    skip "repository description" ".github/description.txt not present"
+fi
+
 section "Section numbering"
 
 # Numbers are cross-referenced by the documents and by the suites. A skipped
