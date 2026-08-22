@@ -39,7 +39,7 @@ jobs:
     name: Lint and hygiene
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Whitespace, encoding, and terminator checks
         run: make lint
@@ -113,7 +113,7 @@ jobs:
           - os: macos-13
             cc: gcc
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Compiler identification
         run: ${{ matrix.cc }} --version
@@ -151,7 +151,7 @@ jobs:
       matrix:
         toolchain: [msvc, mingw, clang-cl]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Configure MSVC environment
         if: matrix.toolchain == 'msvc' || matrix.toolchain == 'clang-cl'
@@ -193,7 +193,7 @@ jobs:
           - os: macos-latest
             cc: gcc
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install valgrind
         if: runner.os == 'Linux'
@@ -224,7 +224,7 @@ jobs:
           - thread
           - leak
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build with -fsanitize=${{ matrix.san }}
         run: |
@@ -257,7 +257,7 @@ jobs:
     name: Static analysis
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install analysers
         run: |
@@ -328,7 +328,7 @@ jobs:
             qemu: qemu-s390x-static
             lib: /usr/s390x-linux-gnu
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install cross toolchain and QEMU
         run: |
@@ -365,7 +365,7 @@ jobs:
     name: Historical toolchains
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install Tiny C Compiler
         run: sudo apt-get update -qq && sudo apt-get install -y -qq tcc
@@ -397,7 +397,7 @@ jobs:
     name: Binary analysis and reproducibility
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build
         run: gcc -std=c99 -O2 -Wall -Wextra -pedantic -Werror -o hello hello.c
@@ -439,7 +439,7 @@ jobs:
     name: Documentation conformance
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build
         run: make all
@@ -479,7 +479,7 @@ jobs:
     # image rather than a change in this repository.
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build
         run: |

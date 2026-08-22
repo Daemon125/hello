@@ -29,7 +29,7 @@ jobs:
       matrix:
         cc: [gcc-12, gcc-13, gcc-14, clang-16, clang-17, clang-18]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install ${{ matrix.cc }}
         run: |
@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build against the newest draft the compiler accepts
         run: |
@@ -81,5 +81,5 @@ jobs:
       matrix:
         os: [ubuntu-latest, ubuntu-22.04, macos-latest, macos-13]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: make test
