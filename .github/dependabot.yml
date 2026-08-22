@@ -1,0 +1,21 @@
+# Dependabot configuration.
+#
+# The program itself has one dependency, libc, which is supplied by the
+# operating system and is not something Dependabot can update. This
+# configuration therefore covers only the pipeline's own dependencies --
+# the GitHub Actions it invokes -- which are the repository's sole
+# externally-sourced code and its only genuine supply chain.
+
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "ci"
+    labels:
+      - dependencies
+      - ci

@@ -1,0 +1,73 @@
+name: Bug report
+description: The program did not print Hello, World!
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing: the overwhelming majority of reports against this
+        program are toolchain or environment faults rather than defects in
+        the six lines of source. INSTRUCTIONS.md Part 15 covers fifteen
+        common failures with their causes.
+
+        Please confirm the toolchain works at all before reporting:
+
+        ```sh
+        printf 'int main(void){return 0;}' > /tmp/t.c && cc -o /tmp/t /tmp/t.c && /tmp/t && echo OK
+        ```
+
+  - type: input
+    id: output
+    attributes:
+      label: What did the program print?
+      description: Paste it exactly, including whitespace. If nothing, write "nothing".
+      placeholder: e.g. Hello, World!/n
+    validations:
+      required: true
+
+  - type: input
+    id: status
+    attributes:
+      label: What was the exit status?
+      description: The output of `./hello; echo $?`
+      placeholder: "0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: build
+    attributes:
+      label: Exact build command and its complete output
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Output of `uname -a` and `cc --version`
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: od
+    attributes:
+      label: Byte-level output
+      description: The output of `./hello | od -c`, which shows what was actually emitted rather than what it appeared to be.
+      render: shell
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checked
+    attributes:
+      label: Confirmations
+      options:
+        - label: I read INSTRUCTIONS.md Part 15 and my failure is not listed there
+          required: true
+        - label: The toolchain check above succeeded
+          required: true
+        - label: My source file contains straight quotes, not typographic ones
+          required: true

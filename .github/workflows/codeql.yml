@@ -1,0 +1,45 @@
+# CodeQL security scanning.
+#
+# README section 9.1 states the program's attack surface is zero. That is a
+# claim derived from reading six lines, and a claim derived from reading is
+# worth less than one derived from analysis. This workflow is the analysis.
+#
+# A finding here would be genuinely interesting and should be treated as
+# such rather than dismissed.
+
+name: CodeQL
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  schedule:
+    # Weekly, so that new CodeQL rules are applied to unchanged source.
+    # The source will not change; the rules will.
+    - cron: "27 4 * * 1"
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: CodeQL / c-cpp
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: c-cpp
+          queries: security-extended,security-and-quality
+
+      - name: Build
+        run: cc -std=c99 -O2 -o hello hello.c
+
+      - name: Analyze
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: /language:c-cpp

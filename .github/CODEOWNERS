@@ -1,0 +1,20 @@
+# Code owners.
+#
+# Every path here requires review from the listed owner before merging.
+# Replace @OWNER with the repository owner's GitHub handle.
+
+# Everything, by default.
+*                       @OWNER
+
+# The program itself. Six lines, unchanged since 1999, and the only file in
+# the repository where a change alters what the software does.
+/hello.c                @OWNER
+
+# The pipeline is the repository's only externally-sourced code and the only
+# part of it that changes without anyone editing this repository.
+/.github/workflows/     @OWNER
+/.github/dependabot.yml @OWNER
+
+# Documentation whose quantitative claims are asserted by tests/05-docs.sh.
+/README.md              @OWNER
+/INSTRUCTIONS.md        @OWNER

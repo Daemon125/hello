@@ -1,0 +1,202 @@
+.\" Manual page for hello(1).
+.\"
+.\" Rendered with:  man ./hello.1
+.\" Checked with:   mandoc -Tlint hello.1
+.\"
+.TH HELLO 1 "2026-08-22" "hello 1.2.0" "User Commands"
+.
+.SH NAME
+hello \- print a greeting to standard output
+.
+.SH SYNOPSIS
+.B hello
+.
+.SH DESCRIPTION
+.B hello
+writes the string
+.RB \(lq "Hello, World!" \(rq
+followed by a newline to standard output, and exits.
+.PP
+That is the entire behaviour.
+.B hello
+accepts no options, reads no input, consults no configuration, opens no
+files, performs no network activity, and retains no state between
+invocations. Arguments supplied on the command line are ignored.
+.PP
+The program's purpose is diagnostic. Its output is not the product; the
+product is the demonstration that a compiler, assembler, linker, loader,
+C runtime, kernel, terminal driver, and display pipeline are all
+functioning together on the host. A program that computes something can
+fail in two indistinguishable ways \(em the apparatus is broken, or the
+logic is wrong.
+.B hello
+has no logic to get wrong, which makes it the smallest question that
+still requires the entire system to answer.
+.
+.SH OPTIONS
+None.
+.PP
+.BR \-\-help ", " \-\-version ", and every other argument are accepted and"
+ignored; the program prints its greeting regardless. This is deliberate.
+See
+.BR "README section 7" .
+.
+.SH EXIT STATUS
+.TP
+.B 0
+Success. Emitted unconditionally.
+.PP
+The exit status space is eight bits wide.
+.B hello
+uses one value of the 256 available. Note that
+.B 0
+does not indicate that the greeting was received, or was good; it
+indicates only that nothing went wrong. See
+.B CAVEATS
+below.
+.
+.SH OUTPUT
+Exactly fourteen bytes on file descriptor 1:
+.PP
+.RS
+.nf
+0000000   H  e  l  l  o  ,     W  o  r  l  d  !  \en
+0000016
+.fi
+.RE
+.PP
+Nothing is written to standard error.
+.PP
+Standard output is line buffered when attached to a terminal and fully
+buffered otherwise. The trailing newline triggers the flush in the
+former case; in the latter the buffer is flushed at exit.
+.
+.SH EXAMPLES
+.TP
+Run it:
+.B hello
+.TP
+Verify the exit status:
+.B hello; echo $?
+.TP
+Inspect the exact bytes emitted:
+.B hello | od \-c
+.TP
+Confirm the byte count:
+.B hello | wc \-c
+.
+.SH ENVIRONMENT
+.B hello
+reads no environment variables.
+.PP
+Several nonetheless affect what is observed, none through any action of
+the program:
+.TP
+.B TERM
+Determines how the terminal renders the bytes. Not read by
+.BR hello .
+.TP
+.BR LANG ", " LC_ALL
+Have no effect. The output is pure 7-bit ASCII and is not localized.
+.TP
+.B LD_PRELOAD
+May replace
+.BR printf (3)
+entirely, at which point no guarantee in this page holds.
+.
+.SH FILES
+None.
+.B hello
+neither reads nor writes any file. It has no configuration file, no
+state directory, no cache, and no log.
+.
+.SH CAVEATS
+The return value of
+.BR printf (3)
+is not checked. If the write fails \(em the disk is full, the pipe is
+closed, the terminal has gone away \(em
+.B hello
+does not detect it and still exits
+.BR 0 ,
+reporting success for something that did not occur.
+.PP
+This is reproducible:
+.PP
+.RS
+.nf
+hello >&\-
+.fi
+.RE
+.PP
+The write fails, nothing is printed, and the exit status is
+.BR 0 .
+This is a genuine defect, present in essentially every published version
+of this program including the original. It is documented rather than
+fixed; see
+.B "README section 12.2"
+for the reasoning.
+.
+.SH CONFORMING TO
+.B hello
+requires a hosted C implementation. It builds clean under every C
+standard from C89 through C23, and as C++98 through C++20, with
+.B \-Wall \-Wextra \-pedantic \-Werror
+and no diagnostics.
+.PP
+It does not build on a freestanding implementation, which has no
+.BR stdio (3)
+and no runtime to call
+.BR main ().
+.
+.SH BUGS
+See
+.B "README section 12"
+for the complete list of known limitations, of which the
+.BR printf (3)
+return value above is the only functional one.
+.PP
+Report bugs via the repository's issue tracker. Note that the
+overwhelming majority of reports are toolchain or environment faults
+rather than defects in six lines of source;
+.B "INSTRUCTIONS.md Part 15"
+covers fifteen common failures and their causes.
+.
+.SH HISTORY
+The phrase first appears in Brian Kernighan's
+.I "A Tutorial Introduction to the Language B"
+(Bell Laboratories, 1972), and was fixed permanently in the culture by
+the first page of Kernighan and Ritchie,
+.IR "The C Programming Language" ,
+Prentice-Hall, 1978.
+.PP
+The original was lowercase and carried no exclamation point:
+.IR "hello, world" .
+The capitals and the exclamation mark are a later redaction.
+.PP
+Kernighan has said the phrase came to him from a cartoon of a newly
+hatched chick. The complete history of the sentence, of the language it
+is written in, and of the language it is written with, is in the
+commentary of
+.IR hello.c ,
+which runs to 2,712 lines.
+.
+.SH SEE ALSO
+.BR printf (3),
+.BR write (2),
+.BR cc (1),
+.BR od (1)
+.PP
+.IR README.md ,
+.IR INSTALL.md ,
+.IR INSTRUCTIONS.md ,
+and
+.I hello.c
+in the source distribution.
+.
+.SH AUTHORS
+The phrase is Brian Kernighan's. The language is Dennis Ritchie's. The
+commentary is this repository's.
+.
+.SH COPYRIGHT
+Public domain. See
+.IR LICENSE .

@@ -1,0 +1,85 @@
+# Nightly verification against moving toolchains.
+#
+# Nothing in this repository changes. The compilers, standard libraries,
+# kernels, and runner images underneath it change constantly, and they are
+# the only plausible source of a regression.
+#
+# This workflow therefore rebuilds unchanged source against the newest
+# available toolchains, including pre-release ones, on a schedule. Its
+# purpose is to detect the day a compiler decides that something in these
+# six lines is now worth a diagnostic.
+
+name: Nightly
+
+on:
+  schedule:
+    - cron: "13 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+
+  bleeding-edge:
+    name: ${{ matrix.cc }} (latest available)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cc: [gcc-12, gcc-13, gcc-14, clang-16, clang-17, clang-18]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ${{ matrix.cc }}
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ${{ matrix.cc }} || {
+            echo "::notice::${{ matrix.cc }} unavailable on this image; skipping"
+            echo "SKIP=1" >> "$GITHUB_ENV"
+          }
+
+      - name: Build with every standard this compiler knows
+        if: env.SKIP != '1'
+        run: |
+          for std in c89 c99 c11 c17 c23; do
+            if ${{ matrix.cc }} -std=$std -E -xc /dev/null > /dev/null 2>&1; then
+              ${{ matrix.cc }} -std=$std -Wall -Wextra -pedantic -Werror \
+                -o hello hello.c
+              test "$(./hello)" = "Hello, World!"
+              echo "  $std ok"
+            else
+              echo "  $std unsupported"
+            fi
+          done
+
+  future-standards:
+    name: Draft and experimental standards
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build against the newest draft the compiler accepts
+        run: |
+          # Advisory. A failure here means a future standard has changed
+          # something that affects this program, which is worth knowing
+          # early and is not a reason to fail the build today.
+          for std in c2x c23 c2y; do
+            if gcc -std=$std -E -xc /dev/null > /dev/null 2>&1; then
+              echo "== $std =="
+              gcc -std=$std -Wall -Wextra -pedantic -o /dev/null hello.c \
+                && echo "  clean" || echo "  ::warning::diagnostics under $std"
+            fi
+          done
+
+  full-suite:
+    name: Full suite on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-22.04, macos-latest, macos-13]
+    steps:
+      - uses: actions/checkout@v4
+      - run: make test

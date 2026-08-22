@@ -1,0 +1,50 @@
+name: Feature request
+description: Propose a change to what the program does
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        README section 3.1 lists the features that have been considered and
+        rejected, and section 13 explains why there is no 2.0.
+
+        The program's value is that it has nothing to get wrong: it is the
+        smallest question that still requires the entire toolchain to
+        answer. Every feature added removes some of that value, so the bar
+        for adding one is correspondingly high.
+
+        Proposals are still read. Please make the case.
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What should the program do that it does not do?
+    validations:
+      required: true
+
+  - type: textarea
+    id: diagnostic
+    attributes:
+      label: How does this preserve the diagnostic property described in README section 1.1?
+      description: >
+        A program that computes something can fail in two indistinguishable
+        ways: the apparatus is broken, or the logic is wrong. Explain how
+        your proposal keeps those distinguishable.
+    validations:
+      required: true
+
+  - type: textarea
+    id: failure-modes
+    attributes:
+      label: What new failure modes does this introduce?
+      description: Every added feature adds ways to fail. List them.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checked
+    attributes:
+      label: Confirmations
+      options:
+        - label: I have read README section 3.1 and my proposal is not already listed there
+          required: true

@@ -1,0 +1,56 @@
+# Citation metadata.
+#
+# GitHub renders a "Cite this repository" control from this file. The format
+# is Citation File Format 1.2.0; the schema is at https://citation-file-format.github.io/
+#
+# The phrase itself should be cited to Kernighan rather than to this
+# repository; see the references section below and README section 17.
+
+cff-version: 1.2.0
+message: >-
+  If this repository has contributed to your work, please cite it as below.
+  If you are citing the phrase rather than this treatment of it, cite
+  Kernighan 1972 or Kernighan and Ritchie 1978 in the references section.
+title: >-
+  Hello, World: An Inquiry into the Descent of a Sentence, the Machine That
+  Utters It, and the Question of Whether Anything Is Meant By It
+abstract: >-
+  A complete C program that prints "Hello, World!" to standard output and
+  exits, accompanied by a three-volume treatment of the sentence's descent
+  from Proto-Indo-European, the history of the language that utters it, and
+  the philosophical status of the utterance. 2,712 lines of documentation
+  supporting 6 lines of executable code.
+type: software
+license: Unlicense
+keywords:
+  - c
+  - hello-world
+  - historical-linguistics
+  - philosophy-of-language
+  - programming-language-history
+
+references:
+  - type: report
+    title: A Tutorial Introduction to the Language B
+    authors:
+      - family-names: Kernighan
+        given-names: Brian W.
+    institution:
+      name: Bell Laboratories
+    year: 1972
+    notes: >-
+      Earliest known appearance of the phrase "hello, world".
+
+  - type: book
+    title: The C Programming Language
+    authors:
+      - family-names: Kernighan
+        given-names: Brian W.
+      - family-names: Ritchie
+        given-names: Dennis M.
+    publisher:
+      name: Prentice-Hall
+    year: 1978
+    edition: First
+    notes: >-
+      Fixed the phrase permanently in the culture. 228 pages.

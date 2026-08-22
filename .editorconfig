@@ -1,0 +1,47 @@
+# EditorConfig -- https://editorconfig.org/
+#
+# Enforced in CI by `make lint`, which checks trailing whitespace and final
+# newlines directly rather than trusting that every contributor's editor
+# honours this file. The two must agree; if you change one, change the other.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+# hello.c is pure 7-bit ASCII, asserted by tests/05-docs.sh. The charset
+# above is a superset and does not weaken that; the test is the authority.
+[*.c]
+indent_style = space
+indent_size = 4
+max_line_length = 79
+
+# The dissertation in hello.c and the Markdown documents are hard-wrapped at
+# 79 columns, which is the width of a punched card minus one -- the column
+# reserved on an 80-column card so that a line could never be mistaken for a
+# continuation. Terminals inherited the width; the convention outlived both.
+[*.md]
+max_line_length = 79
+trim_trailing_whitespace = true
+
+# Makefiles require literal tabs for recipe lines. This is not a style
+# preference; a Makefile indented with spaces does not work.
+[Makefile]
+indent_style = tab
+
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+[*.sh]
+indent_style = space
+indent_size = 4
+
+# Roff macros are column-sensitive in places; leave them alone.
+[*.1]
+trim_trailing_whitespace = false

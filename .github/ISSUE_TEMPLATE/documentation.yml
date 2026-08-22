@@ -1,0 +1,49 @@
+name: Documentation correction
+description: Something in the documentation is factually wrong
+labels: [documentation]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Corrections are welcome and are the most likely kind of contribution
+        to be accepted. The documentation makes a large number of historical,
+        linguistic, and technical claims, and some of them are almost
+        certainly wrong.
+
+        Note that quantitative claims -- line counts, ratios, byte counts --
+        are verified automatically by `tests/05-docs.sh` on every commit. If
+        one of those is wrong, the pipeline is broken and that is the bug.
+
+  - type: input
+    id: location
+    attributes:
+      label: Where is the error?
+      description: File and section number, e.g. "hello.c section 3.6" or "README section 9.3"
+    validations:
+      required: true
+
+  - type: textarea
+    id: claim
+    attributes:
+      label: What does the documentation currently claim?
+      description: Quote it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: correction
+    attributes:
+      label: What is actually the case?
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: >
+        A citation, please. The documentation flags its own two uncertain
+        claims (the origin of the phrase, and the contested points about
+        Middle English) and would prefer not to acquire more.
+    validations:
+      required: true
