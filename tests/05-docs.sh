@@ -112,57 +112,68 @@ rm -f "$_suite"
 
 section "Repository description"
 
-# GitHub's description field is not version-controlled and is edited in a
-# web form, which is how it drifts from the repository it describes. The
-# canonical text lives in .github/description.txt so that it can be
-# reviewed in a diff and checked here.
+# GitHub's description field is edited in a web form and stored outside the
+# repository, which is how it drifts from the thing it describes. The
+# canonical text lives in .github/description.txt so that it appears in
+# diffs and can be checked here.
 #
-# The description asserts of itself that "the line counts in this
-# description ... is exact". That is a falsifiable claim; these are the
-# assertions that make it one.
+# The budget is 155 characters rather than GitHub's 350-character maximum:
+# search engines truncate the displayed snippet at roughly 155, so anything
+# beyond that is stored and indexed but never shown to a human deciding
+# whether to click. Truncation is measured in pixels rather than characters,
+# so 155 is a guide and not a guarantee.
 
 DESCFILE="$ROOT/.github/description.txt"
 
 if [ -f "$DESCFILE" ]; then
     _desc=$(cat "$DESCFILE")
-    _len=$(printf '%s' "$_desc" | wc -c | tr -d ' ')
-    _lines=$(wc -l < "$DESCFILE" | tr -d ' ')
 
-    printf '    description: %s characters, GitHub allows 350\n' "$_len"
+    # Characters, not bytes. GitHub counts characters; `wc -c` counts bytes,
+    # and the two diverge the moment the text contains anything non-ASCII --
+    # an em dash is one character and three bytes. `wc -m` is character-aware
+    # given a UTF-8 locale. Both are reported below so that a divergence is
+    # visible rather than silent.
+    _chars=$(printf '%s' "$_desc" | LC_ALL=en_US.UTF-8 wc -m | tr -d ' ')
+    _bytes=$(printf '%s' "$_desc" | wc -c | tr -d ' ')
 
-    equals "the description is exactly 350 characters" "350" "$_len"
-    equals "the description is a single line" "1" "$_lines"
+    printf '    description: %s characters (%s bytes); budget 155, GitHub caps at 350\n' \
+        "$_chars" "$_bytes"
 
-    # GitHub renders the field as plain text; a newline or tab would be
-    # silently collapsed and the stored text would no longer match this file.
+    # A ceiling rather than an equality. The meaningful constraint is that
+    # the text survives the search-result snippet intact; pinning an exact
+    # length would fail on any reasonable rewording, and would tempt whoever
+    # hit it to pad the sentence rather than fix the test.
+    ok "the description fits the ~155-character search snippet" \
+        test "$_chars" -le 155
+
+    # A floor as well, so the field cannot be quietly gutted to a few words
+    # without anything noticing.
+    ok "the description is substantial (at least 120 characters)" \
+        test "$_chars" -ge 120
+
+    ok "the description is within GitHub's 350-character limit" \
+        test "$_chars" -le 350
+
+    equals "the description is a single line" \
+        "1" "$(wc -l < "$DESCFILE" | tr -d ' ')"
+
+    # GitHub renders the field as plain text; a tab or control character
+    # would be collapsed and the stored value would stop matching this file.
     equals "the description contains no tab or control characters" \
         "0" "$(printf '%s' "$_desc" | LC_ALL=C tr -dc '\000-\010\011\013-\037' | wc -c | tr -d ' ')"
 
-    # The two line counts it quotes, against the repository as it is.
-    # Formatted with a thousands separator, the way the prose writes them.
-    _doc_fmt=$(printf '%s' "$DOC_LINES" | sed 's/\(.*\)\([0-9]\{3\}\)$/\1,\2/')
+    # The description deliberately quotes no counts, versions, or dates.
+    # Every figure in this repository is verified somewhere, but the
+    # description is the one piece of text that lives on GitHub rather than
+    # in the tree, so a figure here could go stale without any commit
+    # touching it. Keeping numbers out is what makes that impossible.
+    equals "the description states no figure that could go stale" \
+        "" "$(printf '%s' "$_desc" | grep -o '[0-9]' | tr -d '\n')"
 
-    ok "the description's commentary line count matches hello.c ($_doc_fmt)" \
-        grep -q "$_doc_fmt lines of commentary" "$DESCFILE"
-
-    ok "the description says six lines of C" \
-        grep -qi "six lines of C" "$DESCFILE"
-
-    equals "hello.c really does have six significant lines" "6" "$SIG_LINES"
-
-    # The assertion figure is checked as a floor rather than an equality:
-    # the total varies by platform, since suites skip when valgrind, mandoc,
-    # or a static linker is unavailable. The description quotes the figure
-    # from a host where none are skipped, so the real count is never higher.
-    _claimed=$(sed -n 's/.*and \([0-9][0-9]*\) assertions.*/\1/p' "$DESCFILE")
-    printf '    description claims %s assertions\n' "${_claimed:-none}"
-
-    ok "the description quotes an assertion count" \
-        test -n "$_claimed"
-
-    ok "the claimed assertion count is within reach of the suite" \
-        test "${_claimed:-0}" -le 400
-
+    # The primary keyword must lead: search engines weight the opening of a
+    # description, and a reader scanning results reads the first few words.
+    ok "the description opens with the primary keyword" \
+        sh -c "head -c 16 '$DESCFILE' | grep -q '^Hello World in C'"
 else
     skip "repository description" ".github/description.txt not present"
 fi

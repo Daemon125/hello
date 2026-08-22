@@ -851,10 +851,11 @@ It verifies:
 - That `make help` prints only the Makefile's comment header, and that the
   set of targets it documents is exactly the set the Makefile declares
 - That [`.github/description.txt`](.github/description.txt) — the repository
-  description, kept in version control so that it can be reviewed in a diff
-  rather than edited in a web form — is exactly 350 characters, is a single
-  line, and quotes line counts that match `hello.c`. The description asserts
-  of itself that its figures are exact; this is what makes that falsifiable.
+  description, kept in version control so that it appears in diffs rather
+  than being edited in a web form — is a single line, fits the ~155-character
+  search-result snippet, leads with its primary keyword, and quotes no figure
+  that could go stale. Length is measured in characters rather than bytes,
+  since the two diverge the moment the text stops being ASCII.
 
 If a figure in this README is wrong, CI is red. The correct response is to
 change the prose, not the test.
