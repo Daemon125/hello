@@ -1559,7 +1559,8 @@ test "$(./hello)" = "Hello, World!" && echo PASS || echo FAIL
 
 Expected: `14`. Thirteen visible characters plus the newline.
 
-If this prints `13`, your `\n` is missing or was typed as `/n`.
+If this prints `13`, your `\n` is missing; if this prints 15, `\n` was typed
+as `/n`.
 
 ## 14.3 Byte-level inspection
 
