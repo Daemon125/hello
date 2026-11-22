@@ -93,8 +93,8 @@ installcheck:
 	  || (echo "FAIL: $(DESTDIR)$(BINDIR)/$(TARGET) is not executable" && exit 1)
 	@test "$$($(DESTDIR)$(BINDIR)/$(TARGET))" = "Hello, World!" \
 	  || (echo "FAIL: installed binary produced wrong output" && exit 1)
-	@test -f $(DESTDIR)$(MANDIR)/man1/$(MAN1) \
-	  || (echo "FAIL: manual page not installed" && exit 1)
+	@man -M $(DESTDIR)$(MANDIR) 1 $(TARGET) > /dev/null 2>&1 \
+	  || (echo "FAIL: manual page not installed or not renderable" && exit 1)
 	@BIN=$(DESTDIR)$(BINDIR)/$(TARGET) sh tests/01-behavior.sh > /dev/null \
 	  || (echo "FAIL: installed binary failed the behaviour suite" && exit 1)
 	@echo "installcheck: binary, manual page, and behaviour suite all verified"
